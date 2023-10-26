@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package shopline;
-import Controllers.dbController;
+import Controllers.ProdutoController;
+import Controllers.VendasController;
+import Models.Produtos;
+import Modules.Time;
+import java.util.List;
 
 public class ShopLine {
 
@@ -13,10 +17,18 @@ public class ShopLine {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        dbController db = new dbController();
+        ProdutoController db = new ProdutoController();
         
-        db.getProdutos();
-
+       
+      //db.createProduto(25, "Calcinha Usada", 1, 25.00, 10, "25/10/2023");
+      //db.createOne(25, "Michael", 1, 300.00, 1, "25/10/2023");
+      Time teste = new Time();
+      teste.GetData();
+     
+      VendasController vendas = new VendasController();
+    
+      System.out.println(vendas.findMany());
+     
      
     }
     

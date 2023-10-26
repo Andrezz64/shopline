@@ -35,7 +35,7 @@ public class Produtos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "codigo")
@@ -57,7 +57,7 @@ public class Produtos implements Serializable {
     private Integer dadosItemVendaid;
 
     public Produtos() {
-        
+
     }
 
     public Produtos(Integer id) {
