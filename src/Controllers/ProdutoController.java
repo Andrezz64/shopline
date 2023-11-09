@@ -18,7 +18,6 @@ public class ProdutoController {
     private final EntityManager em = emf.createEntityManager();
 
     // Procura por um produto com um ID especifico
-  
     public Produtos findOne(int id) {
         em.getTransaction().begin();
         Produtos entity = em.find(Produtos.class, 1);
@@ -53,7 +52,6 @@ public class ProdutoController {
     }
 
     // Lista todos os produtos da base
-  
     public List<Produtos> findMany() {
 
         em.getTransaction().begin();
@@ -70,7 +68,6 @@ public class ProdutoController {
     }
 
     // Cria uma nova entry de produto.
-
     public void createOne(int codigo, String nome, int unidade, double preco, int quantidadeDisponivel, String dataUltimaVenda) {
 
         Produtos novoProduto = new Produtos();
@@ -91,15 +88,32 @@ public class ProdutoController {
         em.getTransaction().begin();
 
         Produtos produtoDeleted = em.find(Produtos.class, id);
-       if(produtoDeleted != null){
-        em.remove(produtoDeleted);
-        em.getTransaction().commit();
-        em.close();
-       }
+        if (produtoDeleted != null) {
+            em.remove(produtoDeleted);
+            em.getTransaction().commit();
+            em.close();
+        }
 
     }
-    
-    public void changeOne(int id){
-    
+
+    public void changeOne(int id, Produtos ProdutoData) {
+        em.getTransaction().begin();
+        Produtos produtoChanged = em.find(Produtos.class, id);
+        
+        if(produtoChanged != null){
+        
+        
+        produtoChanged.setCodigo(ProdutoData.getCodigo());
+        produtoChanged.setNome(ProdutoData.getNome());
+        produtoChanged.setUnidade(ProdutoData.getUnidade());
+        produtoChanged.setPreco(ProdutoData.getPreco());
+        produtoChanged.setQuantidadeDisponivel(ProdutoData.getQuantidadeDisponivel());
+        produtoChanged.setDataUltimaVenda(ProdutoData.getDataUltimaVenda());
+        }
+        
+        
+        em.merge(produtoChanged);
+        em.getTransaction().commit();
+        em.close();
     }
 }

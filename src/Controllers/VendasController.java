@@ -90,4 +90,20 @@ public class VendasController {
        }
 
     }
+    
+     public void changeOne(int id, Vendas vendaData) {
+        Time dataModule = new Time();
+         em.getTransaction().begin();
+        Vendas vendasChanged = em.find(Vendas.class, id);
+        
+        if(vendasChanged != null){
+        vendasChanged.setDataVenda(dataModule.GetData());
+        vendasChanged.setValorTotal(vendaData.getValorTotal());
+        }
+        
+        
+        em.merge(vendasChanged);
+        em.getTransaction().commit();
+        em.close();
+    }
 }

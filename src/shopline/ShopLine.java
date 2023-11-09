@@ -6,6 +6,7 @@ package shopline;
 import Controllers.ProdutoController;
 import Controllers.VendasController;
 import Models.Produtos;
+import Models.Vendas;
 import Modules.Time;
 import java.util.List;
 
@@ -22,12 +23,13 @@ public class ShopLine {
        
       //db.createProduto(25, "Calcinha Usada", 1, 25.00, 10, "25/10/2023");
       //db.createOne(25, "Michael", 1, 300.00, 1, "25/10/2023");
-      Time teste = new Time();
-      teste.GetData();
+      //Time teste = new Time();
+      //teste.GetData();
      
       VendasController vendas = new VendasController();
-    
-      System.out.println(vendas.findMany());
+      Vendas venda = new Vendas();
+      venda.setValorTotal(16.3);
+      vendas.changeOne(1, venda);
      
      
     }

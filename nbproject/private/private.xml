@@ -5,9 +5,14 @@
         <group>
             <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/META-INF/persistence.xml</file>
             <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Models/Produtos.java</file>
-            <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Controllers/dbController.java</file>
+            <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Models/DadosItemVenda.java</file>
+            <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Controllers/ItemVendaController.java</file>
+            <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Controllers/ProdutoController.java</file>
+            <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Controllers/VendasController.java</file>
+            <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Models/Vendas.java</file>
             <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/shopline/ShopLine.java</file>
             <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Viwes/Main.java</file>
+            <file>file:/C:/Users/andre.infra/Desktop/shopLine/src/Modules/Time.java</file>
         </group>
     </open-files>
 </project-private>
