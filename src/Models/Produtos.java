@@ -32,7 +32,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Produtos.findByVendaId", query = "SELECT p FROM Produtos p WHERE p.vendaId = :vendaId"),
     @NamedQuery(name = "Produtos.findByDadosItemVendaid", query = "SELECT p FROM Produtos p WHERE p.dadosItemVendaid = :dadosItemVendaid")})
 public class Produtos implements Serializable {
-
+    private int quantidade;
+    
     private static final long serialVersionUID = 1L;
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,13 +58,21 @@ public class Produtos implements Serializable {
     private Integer dadosItemVendaid;
 
     public Produtos() {
-
+       
     }
 
     public Produtos(Integer id) {
         this.id = id;
     }
-
+    
+    public void setQuantide(int quantidade){
+    this.quantidade = quantidade;
+    }
+    
+    public int getQuantidade() {
+        return quantidade;
+    }
+    
     public Integer getId() {
         return id;
     }

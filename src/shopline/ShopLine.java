@@ -26,12 +26,9 @@ public class ShopLine {
       //Time teste = new Time();
       //teste.GetData();
      
-      VendasController vendas = new VendasController();
-      Vendas venda = new Vendas();
-      venda.setValorTotal(16.3);
-      vendas.changeOne(1, venda);
-     
-     
+        ProdutoController produto = new ProdutoController();
+        Produtos produtos = produto.findOne(1);
+        System.out.println(produtos.getNome());
     }
     
 }
