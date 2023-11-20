@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -32,8 +33,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Produtos.findByVendaId", query = "SELECT p FROM Produtos p WHERE p.vendaId = :vendaId"),
     @NamedQuery(name = "Produtos.findByDadosItemVendaid", query = "SELECT p FROM Produtos p WHERE p.dadosItemVendaid = :dadosItemVendaid")})
 public class Produtos implements Serializable {
+    @Transient
     private int quantidade;
-    
     private static final long serialVersionUID = 1L;
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -167,7 +168,7 @@ public class Produtos implements Serializable {
 
     @Override
     public String toString() {
-        return "Models.Produtos[ id=" + id + " ]";
+        return codigo + " | " + nome + " | " +" Valor: R$" + preco;
     }
     
 }

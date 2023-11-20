@@ -8,6 +8,7 @@ import Models.Produtos;
 import Models.TableModel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 
 /**
@@ -15,30 +16,19 @@ import javax.swing.JTable;
  * @author Andre.infra
  */
 public class Main extends javax.swing.JFrame {
-
+   
+    public List<Produtos> listaDeProdutos = new ArrayList<>();
+     private  TableModel modelo = new TableModel(listaDeProdutos);
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-         List<Produtos> listaDeProdutos = new ArrayList<>();
-         TableModel modelo = new TableModel(listaDeProdutos);
-         JTable tabela = new JTable(modelo);
-         Produtos produto = new Produtos();
-         produto.setCodigo(1);
-         produto.setNome("Pó de serra");
-         produto.setQuantide(25);
-         produto.setPreco(1.62);
+        setLocationRelativeTo(null); 
+         //TableModel modelo = new TableModel(listaDeProdutos);
         
-         listaDeProdutos.add(produto);
-         listaDeProdutos.add(produto);
-         listaDeProdutos.add(produto);
-         listaDeProdutos.add(produto);
-         listaDeProdutos.add(produto);
-         listaDeProdutos.add(produto);
-         listaDeProdutos.add(produto);
-         listaDeProdutos.add(produto);
-         
+         JTable tabela = new JTable(modelo);
+
         // Adicione a tabela a um JScrollPane (opcional)
         jScrollPane1.setViewportView(tabela);
     }
@@ -56,7 +46,7 @@ public class Main extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jPopupMenu3 = new javax.swing.JPopupMenu();
         Title = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botaoAdicionarProduto = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -74,7 +64,12 @@ public class Main extends javax.swing.JFrame {
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Title.setText("SHOPLINE STORE");
 
-        jButton1.setText("Adicionar Produto");
+        botaoAdicionarProduto.setText("Adicionar Produto");
+        botaoAdicionarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarProdutoActionPerformed(evt);
+            }
+        });
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,7 +112,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoAdicionarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -156,7 +151,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(botaoAdicionarProduto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
@@ -184,6 +179,18 @@ public class Main extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public  void adicionarProduto(Produtos produto){
+    listaDeProdutos.add(produto);
+    modelo.fireTableDataChanged();
+    System.out.println(listaDeProdutos);
+    }
+    
+    private void botaoAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarProdutoActionPerformed
+      AdicionarProduto add = new AdicionarProduto();
+      add.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+      add.setVisible(true);
+    }//GEN-LAST:event_botaoAdicionarProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,7 +229,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botaoAdicionarProduto;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

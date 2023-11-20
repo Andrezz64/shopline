@@ -8,6 +8,7 @@ import Controllers.VendasController;
 import Models.Produtos;
 import Models.Vendas;
 import Modules.Time;
+import Viwes.Login;
 import java.util.List;
 
 public class ShopLine {
@@ -16,19 +17,8 @@ public class ShopLine {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-        ProdutoController db = new ProdutoController();
-        
-       
-      //db.createProduto(25, "Calcinha Usada", 1, 25.00, 10, "25/10/2023");
-      //db.createOne(25, "Michael", 1, 300.00, 1, "25/10/2023");
-      //Time teste = new Time();
-      //teste.GetData();
-     
-        ProdutoController produto = new ProdutoController();
-        Produtos produtos = produto.findOne(1);
-        System.out.println(produtos.getNome());
+        Login loginWindow = new Login();
+        loginWindow.setVisible(true);
     }
     
 }

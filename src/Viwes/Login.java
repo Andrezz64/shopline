@@ -6,6 +6,7 @@ package Viwes;
 
 import Controllers.ProdutoController;
 import Models.Produtos;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-      
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -149,11 +150,13 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if("cliente".equals(login.getText()) && "123456".equals(senha.getText())){
-        System.out.println("foi");
+        dispose();
+        Main main = new Main();
+        main.setVisible(true);
+        
     }
         else{
-        System.out.println("nao foi");
-        System.out.println(senha.getText());
+           JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Erro de Credencial", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
