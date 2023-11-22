@@ -7,6 +7,7 @@ package Viwes;
 import Controllers.ProdutoController;
 import Models.ProdutoComboBoxModel;
 import Models.Produtos;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +25,7 @@ public class AdicionarProduto extends javax.swing.JFrame {
         nomeProduto.setText(produtoSelecionado.getNome());
         produtoCodigo.setText(produtoSelecionado.getCodigo().toString());
         produtoValor.setText("R$"+produtoSelecionado.getPreco().toString());
+        quantidadeEstoque.setText(produtoSelecionado.getQuantidadeDisponivel().toString());
     }
 
     /**
@@ -49,6 +51,9 @@ public class AdicionarProduto extends javax.swing.JFrame {
         produtoValor = new javax.swing.JLabel();
         quantidade = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        quantidadeEstoque = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -79,6 +84,10 @@ public class AdicionarProduto extends javax.swing.JFrame {
 
         jLabel5.setText("Quantidade");
 
+        jLabel4.setText("Qtd. Estoque");
+
+        quantidadeEstoque.setText("jLabel6");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,9 +95,7 @@ public class AdicionarProduto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -101,6 +108,10 @@ public class AdicionarProduto extends javax.swing.JFrame {
                                     .addComponent(produtoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(85, 85, 85)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(quantidadeEstoque))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
@@ -115,8 +126,9 @@ public class AdicionarProduto extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
                                 .addComponent(produtoValor))
-                            .addComponent(jSeparator3))
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                            .addComponent(jSeparator3)
+                            .addComponent(jSeparator4))))
+                .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(163, 163, 163)
                 .addComponent(jButton1)
@@ -147,11 +159,17 @@ public class AdicionarProduto extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(produtoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(quantidadeEstoque))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(33, 33, 33))
         );
@@ -165,6 +183,7 @@ public class AdicionarProduto extends javax.swing.JFrame {
         nomeProduto.setText(produtoSelecionado.getNome());
         produtoCodigo.setText(produtoSelecionado.getCodigo().toString());
         produtoValor.setText("R$"+produtoSelecionado.getPreco().toString());
+        quantidadeEstoque.setText(produtoSelecionado.getQuantidadeDisponivel().toString());
         
     }//GEN-LAST:event_produtoComboBoxActionPerformed
 
@@ -172,10 +191,19 @@ public class AdicionarProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
          Object selectedItem = produtoComboBox.getSelectedItem();
          Produtos produtoSelecionado = (Produtos) selectedItem;
-         Main principal = new Main();
-         produtoSelecionado.setQuantide(quantidade.getComponentCount());
+          int valor = (int) quantidade.getValue();
+         if(valor <= 0){
+          JOptionPane.showMessageDialog(this, "Quantidede inválida", "Favor digite uma quantidade válida", JOptionPane.WARNING_MESSAGE);
+         }
+         else if (produtoSelecionado.getQuantidadeDisponivel() < valor ){
+          JOptionPane.showMessageDialog(this, "Estoque insuficiente", "Ops, parece que a não temos essa quantidade :/", JOptionPane.WARNING_MESSAGE);
+         }
+         else{
+         produtoSelecionado.setQuantide(valor);
          
-         principal.adicionarProduto(produtoSelecionado);
+         Main.adicionarProduto(produtoSelecionado);
+         }
+   
     }//GEN-LAST:event_jButton1ActionPerformed
 
      
@@ -220,15 +248,18 @@ public class AdicionarProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel nomeProduto;
     private javax.swing.JLabel nomeProdutoLabel;
     private javax.swing.JLabel produtoCodigo;
     private javax.swing.JComboBox<Produtos> produtoComboBox;
     private javax.swing.JLabel produtoValor;
     private javax.swing.JSpinner quantidade;
+    private javax.swing.JLabel quantidadeEstoque;
     // End of variables declaration//GEN-END:variables
 }

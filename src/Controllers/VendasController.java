@@ -65,17 +65,25 @@ public class VendasController {
 
     // Cria uma nova entry de produto.
 
-    public void createOne(double ValorTotal) {
-        
+    public int createOne(double ValorTotal, String metodoPagamento) {
+        int id;
+  
         Vendas novaVenda = new Vendas();
         Time dataModule = new Time();
         novaVenda.setDataVenda(dataModule.GetData());
         novaVenda.setValorTotal(ValorTotal);
-        
+        novaVenda.setMetodoPagamento(metodoPagamento);
         em.getTransaction().begin();
         em.persist(novaVenda);
+        
         em.getTransaction().commit();
+        
+        TypedQuery<Integer> query = em.createQuery("SELECT MAX(e.id) FROM Vendas e", Integer.class);
+        id = query.getSingleResult();
         em.close();
+        
+        return id;
+ 
     }
     // exclui um produto pelo ID.
 

@@ -2,6 +2,8 @@
 package Controllers;
 
 import Models.DadosItemVenda;
+import Models.Produtos;
+import Models.Vendas;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -66,7 +68,53 @@ public class ItemVendaController {
         emf.close();
         return DadosItemVenda;
     }
-
+    
+    public boolean finalizarCompra(List<Produtos> listaDeProdutos, double valorTotal, String metodoPagamento){
+        int id;
+        int control = 0;
+        
+      VendasController vendasControl = new VendasController();
+        
+       try{
+        id = vendasControl.createOne(valorTotal, metodoPagamento);
+     
+        for(Produtos produto : listaDeProdutos){
+           EntityManager entity = emf.createEntityManager();
+            entity.getTransaction().begin();
+         
+            
+            int quantidade = produto.getQuantidade();
+            double preco = produto.getPreco();
+            int totalItem = (int) (quantidade * preco);
+            int codigo = produto.getCodigo();
+            
+            
+            DadosItemVenda dadosVenda = new DadosItemVenda();
+            dadosVenda.setCodigo(codigo);
+            dadosVenda.setNumeroItem(control);
+            dadosVenda.setQuantVend(quantidade);
+            dadosVenda.setPreco(preco);
+            dadosVenda.setTotalItem(totalItem);
+            dadosVenda.setVendaId(id);
+            
+            
+            entity.persist(dadosVenda);
+            entity.getTransaction().commit();
+            
+            
+             
+            control +=1;
+        }
+       em.close();
+       return true;
+       }
+       catch(Exception e){
+        e.printStackTrace();
+        return false;
+       }
+    }
+    
+    
     // Cria uma nova entry de produto.
     public void createOne(int codigo, int numeroItem, int VendaId, double preco, int totalItem) {
 

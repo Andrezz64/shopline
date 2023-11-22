@@ -4,11 +4,17 @@
  */
 package Viwes;
 
+import Controllers.ItemVendaController;
+import Controllers.ProdutoController;
+import Controllers.VendasController;
+import Models.DadosItemVenda;
 import Models.Produtos;
 import Models.TableModel;
+import Models.Vendas;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -17,8 +23,8 @@ import javax.swing.JTable;
  */
 public class Main extends javax.swing.JFrame {
    
-    public List<Produtos> listaDeProdutos = new ArrayList<>();
-     private  TableModel modelo = new TableModel(listaDeProdutos);
+    private static List<Produtos> listaDeProdutos = new ArrayList<>();
+     private static  TableModel modelo = new TableModel(listaDeProdutos);
     /**
      * Creates new form Main
      */
@@ -56,7 +62,12 @@ public class Main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        botaoFinalizarVenda = new javax.swing.JButton();
+        botaoAtualizar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        totalCarrinho = new javax.swing.JLabel();
+        formePagamento = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -82,7 +93,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabela);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Carrinho:");
+        jLabel1.setText("Carrinho");
 
         jButton2.setText("Deletar Produto");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -101,15 +112,41 @@ public class Main extends javax.swing.JFrame {
 
         jLabel3.setText("Historico:");
 
-        jButton6.setText("Finalizar Venda");
+        botaoFinalizarVenda.setText("Finalizar Venda");
+        botaoFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoFinalizarVendaActionPerformed(evt);
+            }
+        });
+
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Total:");
+
+        totalCarrinho.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalCarrinho.setText("R$0");
+
+        formePagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão de crédito", " " }));
+
+        jLabel5.setText("Forma de pagamento");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(Title)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(botaoAdicionarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -125,19 +162,31 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(67, 67, 67))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jButton6)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(166, 166, 166)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(totalCarrinho)
+                                .addGap(9, 9, 9))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(formePagamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 15, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel5))
+                                        .addGap(12, 12, 12))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botaoFinalizarVenda)
+                                .addGap(16, 16, 16)))))
                 .addGap(20, 20, 20))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(332, 332, 332)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(290, 290, 290)
-                        .addComponent(Title)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,15 +211,22 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4)
+                    .addComponent(totalCarrinho))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton6)
-                        .addGap(187, 187, 187))))
+                        .addComponent(botaoAtualizar)
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(formePagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(botaoFinalizarVenda))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
         );
 
         pack();
@@ -180,17 +236,77 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
     
-    public  void adicionarProduto(Produtos produto){
-    listaDeProdutos.add(produto);
-    modelo.fireTableDataChanged();
-    System.out.println(listaDeProdutos);
+    private static boolean existeNoCarrinho(Produtos produto){
+        for (Produtos produtoLista : listaDeProdutos){
+    if(produtoLista.getCodigo().equals(produto.getCodigo())){
+    System.out.println("Item já está no carrinho");
+    return true;
+    }
+    }
+        return false;
+    }
+    
+    private static double  valorTotalCarrinho (){
+       double valorTotal = 0;
+        
+        for(Produtos produtoLista : listaDeProdutos){
+        double valor;
+        int quantidade;
+        valor = produtoLista.getPreco();
+        quantidade = produtoLista.getQuantidade();
+        valorTotal += valor*quantidade;
+        }
+        
+       
+        return valorTotal;
+    }
+    
+    public  static void adicionarProduto(Produtos produto){
+        if(!existeNoCarrinho(produto)){
+         
+            listaDeProdutos.add(produto);
+             modelo.fireTableDataChanged();
+              totalCarrinho.setText(String.valueOf("R$"+valorTotalCarrinho()));
+        }
+
     }
     
     private void botaoAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarProdutoActionPerformed
+      
       AdicionarProduto add = new AdicionarProduto();
       add.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       add.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarProdutoActionPerformed
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+        // TODO add your handling code here:
+            modelo.fireTableDataChanged();
+            System.out.println(listaDeProdutos);
+
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
+
+    private void botaoFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarVendaActionPerformed
+          double valorTotal = valorTotalCarrinho();
+          ItemVendaController dados = new ItemVendaController();
+          
+          String FormaPagamento = (String) formePagamento.getSelectedItem();
+          dados.finalizarCompra(listaDeProdutos, valorTotal, FormaPagamento);
+          ProdutoController PController = new ProdutoController();
+          JOptionPane.showMessageDialog(this, "Sua compra no valor de R$"+valorTotal+" Foi realizada com sucesso!","Compra efetivada!", JOptionPane.DEFAULT_OPTION);
+          for(Produtos produto : listaDeProdutos){
+              int quantidadeDispo = produto.getQuantidadeDisponivel();
+              int quandidadeCarrihno = produto.getQuantidade();
+              
+              produto.setQuantidadeDisponivel(quantidadeDispo - quandidadeCarrihno);
+              System.out.println("Produto" + produto.getNome() + "teve sua quantidade alterada para"+ produto.getQuantidadeDisponivel());
+              PController.changeOne(produto.getId(),produto);
+          }
+          listaDeProdutos.clear();
+          modelo.fireTableDataChanged();
+          
+          
+
+    }//GEN-LAST:event_botaoFinalizarVendaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,18 +346,23 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
     private javax.swing.JButton botaoAdicionarProduto;
+    private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JButton botaoFinalizarVenda;
+    private javax.swing.JComboBox<String> formePagamento;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;
+    private static javax.swing.JLabel totalCarrinho;
     // End of variables declaration//GEN-END:variables
 }
