@@ -51,6 +51,32 @@ public class ProdutoController {
 
     }
 
+    public void diminiorEtoque(List<Produtos> listaDeProdutos) {
+        for (Produtos produto : listaDeProdutos) {
+            int quantidadeDispo = produto.getQuantidadeDisponivel();
+            int quandidadeCarrihno = produto.getQuantidade();
+
+            produto.setQuantidadeDisponivel(quantidadeDispo - quandidadeCarrihno);
+            System.out.println("Produto" + produto.getNome() + "teve sua quantidade alterada para" + produto.getQuantidadeDisponivel());
+            em.getTransaction().begin();
+            Produtos produtoChanged = em.find(Produtos.class, produto.getId());
+            if (produtoChanged != null) {
+
+                produtoChanged.setCodigo(produto.getCodigo());
+                produtoChanged.setNome(produto.getNome());
+                produtoChanged.setUnidade(produto.getUnidade());
+                produtoChanged.setPreco(produto.getPreco());
+                produtoChanged.setQuantidadeDisponivel(produto.getQuantidadeDisponivel());
+                produtoChanged.setDataUltimaVenda(produto.getDataUltimaVenda());
+            }
+            em.merge(produtoChanged);
+            em.getTransaction().commit();
+           
+            
+        }
+         em.close();
+    }
+
     // Lista todos os produtos da base
     public List<Produtos> findMany() {
 
@@ -99,19 +125,17 @@ public class ProdutoController {
     public void changeOne(int id, Produtos ProdutoData) {
         em.getTransaction().begin();
         Produtos produtoChanged = em.find(Produtos.class, id);
-        
-        if(produtoChanged != null){
-        
-        
-        produtoChanged.setCodigo(ProdutoData.getCodigo());
-        produtoChanged.setNome(ProdutoData.getNome());
-        produtoChanged.setUnidade(ProdutoData.getUnidade());
-        produtoChanged.setPreco(ProdutoData.getPreco());
-        produtoChanged.setQuantidadeDisponivel(ProdutoData.getQuantidadeDisponivel());
-        produtoChanged.setDataUltimaVenda(ProdutoData.getDataUltimaVenda());
+
+        if (produtoChanged != null) {
+
+            produtoChanged.setCodigo(ProdutoData.getCodigo());
+            produtoChanged.setNome(ProdutoData.getNome());
+            produtoChanged.setUnidade(ProdutoData.getUnidade());
+            produtoChanged.setPreco(ProdutoData.getPreco());
+            produtoChanged.setQuantidadeDisponivel(ProdutoData.getQuantidadeDisponivel());
+            produtoChanged.setDataUltimaVenda(ProdutoData.getDataUltimaVenda());
         }
-        
-        
+
         em.merge(produtoChanged);
         em.getTransaction().commit();
         em.close();

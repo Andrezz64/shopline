@@ -56,6 +56,7 @@ public class AdicionarProduto extends javax.swing.JFrame {
         quantidadeEstoque = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
         setResizable(false);
 
         produtoComboBox.setModel(new ProdutoComboBoxModel(controller.findMany()));
