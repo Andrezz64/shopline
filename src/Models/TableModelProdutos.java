@@ -4,12 +4,12 @@ import Controllers.ProdutoController;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class TableModel extends AbstractTableModel {
+public class TableModelProdutos extends AbstractTableModel {
 
     private List<Produtos> produtos;
-    private String[] colunas = {"Código", "Nome", "Preço", "Quantidade"};
+    private String[] colunas = {"Código", "Nome", "Preço", "Quantidade Disponivel"};
 
-    public TableModel(List<Produtos> produtos) {
+    public TableModelProdutos(List<Produtos> produtos) {
         this.produtos = produtos;
     }
 
@@ -34,7 +34,7 @@ public class TableModel extends AbstractTableModel {
             case 2:
                 return produto.getPreco();
             case 3:
-                return produto.getQuantidade();
+                return produto.getQuantidadeDisponivel();
 
             default:
                 return null;
@@ -46,28 +46,7 @@ public class TableModel extends AbstractTableModel {
         return colunas[column];
     }
 
-    @Override
-    public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        Produtos produto = produtos.get(rowIndex);
-        ProdutoController PController = new ProdutoController();
-        int objectInt = (Integer) value;
-        switch (columnIndex) {
-            case 0 -> {
-            }
-            case 1 -> {
-            }
-            case 2 -> {
-            }
-            case 3 -> produto.setQuantide(5);
-        }
-        fireTableCellUpdated(rowIndex, columnIndex);
-    }
 
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        // Permitir a edição em todas as células
-        return true;
-    }
 
  
 }

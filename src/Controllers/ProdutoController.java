@@ -51,6 +51,32 @@ public class ProdutoController {
 
     }
 
+    public int ultimoCódigo(){
+        int id;
+        em.getTransaction().begin();
+        TypedQuery<Integer> query = em.createQuery("SELECT MAX(e.codigo) FROM Produtos e", Integer.class);
+        id = query.getSingleResult();
+        if(em.getTransaction() != null && em.getTransaction().isActive()){
+        em.getTransaction().rollback();
+        }
+        else{
+        em.close();
+        emf.close();
+        }
+
+
+        
+        return id;
+    }
+    
+    public Produtos findProdutoByCodigo(int codigo){
+        em.getTransaction().begin();
+      
+            Produtos produtoChanged = em.find(Produtos.class, codigo);
+            System.out.println(produtoChanged.getNome());
+            return produtoChanged;
+    }
+    
     public void diminiorEtoque(List<Produtos> listaDeProdutos) {
         for (Produtos produto : listaDeProdutos) {
             int quantidadeDispo = produto.getQuantidadeDisponivel();

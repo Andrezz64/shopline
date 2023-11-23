@@ -3,13 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package shopline;
-import Controllers.ProdutoController;
-import Controllers.VendasController;
-import Models.Produtos;
-import Models.Vendas;
-import Modules.Time;
+
 import Viwes.Login;
-import java.util.List;
+
 
 public class ShopLine {
 

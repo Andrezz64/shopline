@@ -22,18 +22,19 @@ import javax.swing.JTable;
  * @author Andre.infra
  */
 public class Main extends javax.swing.JFrame {
-   
+
     private static List<Produtos> listaDeProdutos = new ArrayList<>();
-     private static  TableModel modelo = new TableModel(listaDeProdutos);
+    private static TableModel modelo = new TableModel(listaDeProdutos);
+
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        setLocationRelativeTo(null); 
-         //TableModel modelo = new TableModel(listaDeProdutos);
-        
-         JTable tabela = new JTable(modelo);
+        setLocationRelativeTo(null);
+        //TableModel modelo = new TableModel(listaDeProdutos);
+
+        JTable tabela = new JTable(modelo);
 
         // Adicione a tabela a um JScrollPane (opcional)
         jScrollPane1.setViewportView(tabela);
@@ -72,6 +73,8 @@ public class Main extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        gerenciadorProdutos = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -141,6 +144,15 @@ public class Main extends javax.swing.JFrame {
 
         jLabel5.setText("Forma de pagamento");
 
+        gerenciadorProdutos.setText("Gerenciar Produtos");
+        gerenciadorProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerenciadorProdutosActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Admin Panel");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,17 +175,24 @@ public class Main extends javax.swing.JFrame {
                                     .addComponent(formePagamento, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jSeparator1)
                                     .addComponent(jSeparator2)
+                                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 33, Short.MAX_VALUE)
+                                        .addGap(0, 30, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(botaoFinalizarVenda, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(43, 43, 43))
-                                    .addComponent(jSeparator3)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(botaoFinalizarVenda, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                .addGap(43, 43, 43))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(gerenciadorProdutos))
+                                                .addGap(30, 30, 30))))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44))))
+                                .addComponent(jLabel6)
+                                .addGap(63, 63, 63))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(92, 92, 92)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,11 +259,15 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
-                        .addGap(42, 42, 42)
+                        .addGap(43, 43, 43)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(gerenciadorProdutos)
                         .addGap(18, 18, 18)
                         .addComponent(botaoAtualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
@@ -263,71 +286,76 @@ public class Main extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-    
-    private static boolean existeNoCarrinho(Produtos produto){
-        for (Produtos produtoLista : listaDeProdutos){
-    if(produtoLista.getCodigo().equals(produto.getCodigo())){
-    System.out.println("Item já está no carrinho");
-    return true;
-    }
-    }
+
+    private static boolean existeNoCarrinho(Produtos produto) {
+        for (Produtos produtoLista : listaDeProdutos) {
+            if (produtoLista.getCodigo().equals(produto.getCodigo())) {
+                System.out.println("Item já está no carrinho");
+                return true;
+            }
+        }
         return false;
     }
-    
-    private static double  valorTotalCarrinho (){
-       double valorTotal = 0;
-        
-        for(Produtos produtoLista : listaDeProdutos){
-        double valor;
-        int quantidade;
-        valor = produtoLista.getPreco();
-        quantidade = produtoLista.getQuantidade();
-        valorTotal += valor*quantidade;
+
+    private static double valorTotalCarrinho() {
+        double valorTotal = 0;
+
+        for (Produtos produtoLista : listaDeProdutos) {
+            double valor;
+            int quantidade;
+            valor = produtoLista.getPreco();
+            quantidade = produtoLista.getQuantidade();
+            valorTotal += valor * quantidade;
         }
-        
-       
+
         return valorTotal;
     }
-    
-    public  static void adicionarProduto(Produtos produto){
-        if(!existeNoCarrinho(produto)){
-         
+
+    public static void adicionarProduto(Produtos produto) {
+        if (!existeNoCarrinho(produto)) {
+
             listaDeProdutos.add(produto);
-             modelo.fireTableDataChanged();
-              totalCarrinho.setText(String.valueOf("R$"+valorTotalCarrinho()));
+            modelo.fireTableDataChanged();
+            totalCarrinho.setText(String.valueOf("R$" + valorTotalCarrinho()));
         }
 
     }
-    
+
     private void botaoAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarProdutoActionPerformed
-      
-      AdicionarProduto add = new AdicionarProduto();
-      add.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-      add.setVisible(true);
+
+        AdicionarProduto add = new AdicionarProduto();
+        add.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        add.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarProdutoActionPerformed
 
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
         // TODO add your handling code here:
-            modelo.fireTableDataChanged();
-            System.out.println(listaDeProdutos);
+        modelo.fireTableDataChanged();
+        System.out.println(listaDeProdutos);
 
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void botaoFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarVendaActionPerformed
-          double valorTotal = valorTotalCarrinho();
-          ItemVendaController dados = new ItemVendaController();
-          
-          String FormaPagamento = (String) formePagamento.getSelectedItem();
-          dados.finalizarCompra(listaDeProdutos, valorTotal, FormaPagamento);
-          ProdutoController PController = new ProdutoController();
-          JOptionPane.showMessageDialog(this, "Sua compra no valor de R$"+valorTotal+" Foi realizada com sucesso!","Compra efetivada!", JOptionPane.DEFAULT_OPTION);
-          PController.diminiorEtoque(listaDeProdutos);
-          listaDeProdutos.clear();
-          modelo.fireTableDataChanged();
-          
-          
+        double valorTotal = valorTotalCarrinho();
+        ItemVendaController dados = new ItemVendaController();
+
+        String FormaPagamento = (String) formePagamento.getSelectedItem();
+        dados.finalizarCompra(listaDeProdutos, valorTotal, FormaPagamento);
+        ProdutoController PController = new ProdutoController();
+        JOptionPane.showMessageDialog(this, "Sua compra no valor de R$" + valorTotal + " Foi realizada com sucesso!", "Compra efetivada!", JOptionPane.DEFAULT_OPTION);
+        PController.diminiorEtoque(listaDeProdutos);
+        listaDeProdutos.clear();
+        totalCarrinho.setText("R$0");
+        modelo.fireTableDataChanged();
+
 
     }//GEN-LAST:event_botaoFinalizarVendaActionPerformed
+
+    private void gerenciadorProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciadorProdutosActionPerformed
+        GerenciadorProdutos gerenciador = new GerenciadorProdutos();
+        gerenciador.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        gerenciador.setVisible(true);
+    }//GEN-LAST:event_gerenciadorProdutosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -371,6 +399,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton botaoFinalizarVenda;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JComboBox<String> formePagamento;
+    private javax.swing.JButton gerenciadorProdutos;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -380,6 +409,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
