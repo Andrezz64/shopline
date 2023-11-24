@@ -82,7 +82,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel3.setText("Beta_1");
 
-        jLabel4.setText("Usuário: Cliente");
+        jLabel4.setText("Usuário: Chessman");
 
         jLabel5.setText("Senha: 123456");
 
@@ -158,7 +158,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_senhaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if("cliente".equals(login.getText()) && "123456".equals(senha.getText())){
+        if("Chessman".equals(login.getText()) && "123456".equals(senha.getText())){
         dispose();
         Main main = new Main();
         main.setVisible(true);
@@ -170,7 +170,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-        if("cliente".equals(login.getText()) && "123456".equals(senha.getText())){
+        if("Chessman".equals(login.getText()) && "123456".equals(senha.getText())){
         dispose();
         Main main = new Main();
         main.setVisible(true);

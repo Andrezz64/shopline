@@ -6,7 +6,7 @@
     <class>Models.Vendas</class>
     <class>Models.Produtos</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\Users\andre.infra\Projetos\shopline\src\Controllers\ShopLine.db"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:C:\Proejtos\shopline\src\Controllers\ShopLine.db"/>
       <property name="javax.persistence.jdbc.user" value=""/>
       <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
       <property name="javax.persistence.jdbc.password" value=""/>

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -70,11 +71,18 @@ public class ProdutoController {
     }
     
     public Produtos findProdutoByCodigo(int codigo){
-        em.getTransaction().begin();
-      
-            Produtos produtoChanged = em.find(Produtos.class, codigo);
-            System.out.println(produtoChanged.getNome());
-            return produtoChanged;
+       String jpql = "SELECT p FROM Produtos p WHERE p.codigo = :codigo";
+        Produtos proutoFinal;
+    em.getTransaction().begin();  
+    var query = em.createQuery(jpql, Produtos.class);
+    query.setParameter("codigo", codigo);
+
+    List<Produtos> resultados = query.getResultList();
+
+    em.getTransaction().commit();
+    proutoFinal = resultados.get(0);
+   
+    return proutoFinal;
     }
     
     public void diminiorEtoque(List<Produtos> listaDeProdutos) {
@@ -105,7 +113,7 @@ public class ProdutoController {
 
     // Lista todos os produtos da base
     public List<Produtos> findMany() {
-
+       
         em.getTransaction().begin();
 
         String jpql = "SELECT p FROM Produtos p"; // Consulta JPQL para selecionar todos os registros

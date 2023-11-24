@@ -5,6 +5,7 @@
 package Viwes;
 
 import Controllers.ProdutoController;
+import Models.ProdutoComboBoxModel;
 import Models.Produtos;
 import Models.TableModel;
 import Models.TableModelProdutos;
@@ -18,9 +19,13 @@ import javax.swing.JOptionPane;
  * @author Andre.infra
  */
 public class GerenciadorProdutos extends javax.swing.JFrame {
-   private static final  ProdutoController PController = new ProdutoController();
-    private static final List<Produtos> produtos = PController.findMany();
+   private static ProdutoController PController = new ProdutoController();
+    private static ProdutoController Controller = new ProdutoController();
+    private static final List<Produtos> produtos = Controller.findMany();
    private static final   TableModelProdutos modelo = new TableModelProdutos(produtos);
+   
+   
+   //private static final  ProdutoComboBoxModel ComboModel = new ProdutoComboBoxModel(produtos);
     /**
      * Creates new form historicoVendas
      */
@@ -58,6 +63,8 @@ public class GerenciadorProdutos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         excluirProduto = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,6 +158,11 @@ public class GerenciadorProdutos extends javax.swing.JFrame {
         jTabbedPane1.addTab("Cadastro de produto", jPanel1);
 
         codigoProduto.setToolTipText("Digite o código do produto que deseja excluir");
+        codigoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codigoProdutoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Deletar um produto da base");
@@ -200,6 +212,27 @@ public class GerenciadorProdutos extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Deletar produto", jPanel2);
 
+        jComboBox1.setModel(new ProdutoComboBoxModel(PController.findMany()));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(254, 254, 254)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(274, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(328, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Alterar Produto", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -240,12 +273,18 @@ public class GerenciadorProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_produtoPrecoActionPerformed
 
     private void excluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirProdutoActionPerformed
+        Produtos produto;
         ProdutoController Controller = new ProdutoController();
       int codigo =  Integer.parseInt(codigoProduto.getText());
         Produtos Produto = new Produtos();
-       System.out.println(Controller.findProdutoByCodigo(codigo));
+       produto = Controller.findProdutoByCodigo(codigo);
+       Controller.deleteOne(produto.getId());
         
     }//GEN-LAST:event_excluirProdutoActionPerformed
+
+    private void codigoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codigoProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,6 +327,7 @@ public class GerenciadorProdutos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField codigoProduto;
     private javax.swing.JButton excluirProduto;
+    private javax.swing.JComboBox<Produtos> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -297,6 +337,7 @@ public class GerenciadorProdutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
